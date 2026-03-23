@@ -1674,6 +1674,38 @@
 </footer>
 
 <!-- ─── SCRIPTS ─── -->
+<script>
+/* ── ALL ONCLICK GLOBALS — defined before everything else ── */
+function closeDropdown() {
+  var d = document.getElementById('nav-dropdown');
+  if (d) d.classList.remove('open');
+}
+function closeMobileMenu() {
+  var m = document.getElementById('mobile-menu');
+  if (m) m.classList.remove('open');
+}
+function toggleFaq(btn) {
+  var item = btn.closest('.faq-item');
+  var isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(function(el) {
+    el.classList.remove('open');
+    el.querySelector('.faq-q').setAttribute('aria-expanded','false');
+  });
+  if (!isOpen) {
+    item.classList.add('open');
+    btn.setAttribute('aria-expanded','true');
+  }
+}
+function switchMenu(type) {
+  document.querySelectorAll('.menu-panel').forEach(function(p) { p.classList.remove('active'); });
+  document.querySelectorAll('.menu-tab').forEach(function(t, i) {
+    t.classList.toggle('active', (type==='food'&&i===0)||(type==='drinks'&&i===1));
+  });
+  var el = document.getElementById(type==='drinks' ? 'menu-drinks' : 'menu-food');
+  if (el) el.classList.add('active');
+}
+</script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/11.0.5/swiper-bundle.min.js"></script>
 <script>
 (function() {
@@ -1699,7 +1731,7 @@
 
   /* ── MOBILE MENU ── */
   var mobileClose = document.getElementById('mobile-close');
-  if (mobileClose) mobileClose.addEventListener('click', closeMobileMenu);
+  if (mobileClose) mobileClose.addEventListener('click', function(){ window.closeMobileMenu(); });
 
   /* ── SWIPERS (init after DOM ready) ── */
   document.addEventListener('DOMContentLoaded', function() {
@@ -1752,48 +1784,10 @@
     });
   });
 
-  /* ── GLOBAL FUNCTIONS ── */
-  window.closeDropdown = function() {
-    if (navDropdown) navDropdown.classList.remove('open');
-  };
-
-  window.closeMobileMenu = function() {
-    var m = document.getElementById('mobile-menu');
-    if (m) m.classList.remove('open');
-  };
-
-  /* switchMenu moved to global scope below */
-
-  window.toggleFaq = function(btn) {
-    var item = btn.closest('.faq-item');
-    var isOpen = item.classList.contains('open');
-    document.querySelectorAll('.faq-item.open').forEach(function(el) {
-      el.classList.remove('open');
-      el.querySelector('.faq-q').setAttribute('aria-expanded','false');
-    });
-    if (!isOpen) {
-      item.classList.add('open');
-      btn.setAttribute('aria-expanded','true');
-    }
-  };
-
 })();
 </script>
 
-<script>
-/* ── MENU TAB SWITCHER — plain global so onclick always finds it ── */
-function switchMenu(type) {
-  var panels = document.querySelectorAll('.menu-panel');
-  var tabs   = document.querySelectorAll('.menu-tab');
-  panels.forEach(function(p) { p.classList.remove('active'); });
-  tabs.forEach(function(t, i) {
-    t.classList.toggle('active', (type === 'food' && i === 0) || (type === 'drinks' && i === 1));
-  });
-  var id = type === 'drinks' ? 'menu-drinks' : 'menu-food';
-  var el = document.getElementById(id);
-  if (el) el.classList.add('active');
-}
-</script>
+
 
 <!-- ─── ADMIN LOGIN OVERLAY ─── -->
 <div id="admin-overlay" role="dialog" aria-label="Admin Login" aria-modal="true">
