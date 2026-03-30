@@ -129,7 +129,7 @@
 
   /* ─── NAVBAR ─── */
   #navbar {
-    position:sticky; top:0; z-index:1000;
+    position:relative;
     background:#fff;
     border-bottom:1px solid rgba(232,82,26,0.10);
     box-shadow:0 2px 24px rgba(0,0,0,0.07);
@@ -1045,16 +1045,17 @@
     opacity:0.7; transition:opacity 0.2s;
   }
   .drawer-close:hover { opacity:1; }
-  .drawer-nav { display:flex; flex-direction:column; padding:24px 0; flex:1; }
+  .drawer-nav { display:flex; flex-direction:column; padding:16px 0; flex:1; }
   .drawer-link {
-    font-family:'Playfair Display',serif; font-size:22px; font-weight:700;
-    color:var(--off-white); text-decoration:none;
-    padding:14px 28px; border-bottom:1px solid rgba(255,255,255,0.06);
-    transition:color 0.2s, background 0.2s;
-    display:flex; align-items:center; gap:12px;
+    font-family:'Inter',sans-serif; font-size:15px; font-weight:600;
+    letter-spacing:0.5px; text-transform:uppercase;
+    color:rgba(253,246,236,0.8); text-decoration:none;
+    padding:16px 32px; border-bottom:1px solid rgba(255,255,255,0.06);
+    transition:color 0.2s, padding-left 0.2s;
+    display:flex; align-items:center; justify-content:space-between;
   }
-  .drawer-link:hover { color:var(--amber); background:rgba(245,166,35,0.06); }
-  .drawer-link .drawer-icon { font-size:18px; width:24px; text-align:center; }
+  .drawer-link:hover { color:var(--amber); padding-left:38px; }
+  .drawer-link::after { content:"→"; font-size:16px; opacity:0.4; }
   .drawer-actions { padding:24px; display:flex; flex-direction:column; gap:12px; }
   .drawer-btn {
     display:flex; align-items:center; justify-content:center; gap:8px;
@@ -1069,15 +1070,18 @@
   .drawer-btn-loc:hover { opacity:0.88; }
   /* Hamburger button in navbar */
   .btn-drawer-open {
-    background:none; border:none; cursor:pointer;
-    display:flex; flex-direction:column; gap:5px; padding:8px; margin-left:8px;
+    background:var(--charcoal); border:none; cursor:pointer;
+    display:flex; flex-direction:column; gap:6px;
+    padding:14px 16px; margin-left:12px;
+    border-radius:10px; flex-shrink:0;
+    transition:background 0.2s;
   }
+  .btn-drawer-open:hover { background:var(--deep-orange); }
   .btn-drawer-open span {
-    display:block; width:24px; height:2px;
-    background:var(--charcoal); border-radius:2px;
+    display:block; width:28px; height:2.5px;
+    background:#fff; border-radius:2px;
     transition:all 0.25s ease;
   }
-  .btn-drawer-open:hover span { background:var(--deep-orange); }
 
 </style>
 </head>
@@ -1122,8 +1126,10 @@
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
         Location
       </a>
-      <!-- Hamburger for mobile -->
-      <button class="btn-menu-toggle" id="menu-toggle" aria-label="Menu">☰</button>
+      <!-- Drawer open button -->
+      <button class="btn-drawer-open" onclick="openDrawer()" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </div>
 
@@ -1143,10 +1149,6 @@
         <p>Address, hours, phone, and how to find us in Nerul, Goa.</p>
       </a>
     </div>
-    <!-- Drawer trigger -->
-    <button class="btn-drawer-open" onclick="openDrawer()" aria-label="Open menu">
-      <span></span><span></span><span></span>
-    </button>
   </div>
 </nav>
 
@@ -1985,12 +1987,12 @@ function switchMenu(type) {
     <button class="drawer-close" onclick="closeDrawer()" aria-label="Close menu">✕</button>
   </div>
   <nav class="drawer-nav">
-    <a href="#story" class="drawer-link" onclick="closeDrawer()"><span class="drawer-icon">🌊</span> Our Story</a>
-    <a href="#thali" class="drawer-link" onclick="closeDrawer()"><span class="drawer-icon">🍽</span> Fish Thali</a>
-    <a href="#specials" class="drawer-link" onclick="closeDrawer()"><span class="drawer-icon">⭐</span> Surya Specials</a>
-    <a href="#menu" class="drawer-link" onclick="closeDrawer()"><span class="drawer-icon">📋</span> Full Menu</a>
-    <a href="#opening-hours" class="drawer-link" onclick="closeDrawer()"><span class="drawer-icon">🕐</span> Opening Hours</a>
-    <a href="#contact" class="drawer-link" onclick="closeDrawer()"><span class="drawer-icon">📍</span> Contact & Location</a>
+    <a href="#story"        class="drawer-link" onclick="closeDrawer()">Our Story</a>
+    <a href="#thali"        class="drawer-link" onclick="closeDrawer()">Fish Thali</a>
+    <a href="#specials"     class="drawer-link" onclick="closeDrawer()">Surya Specials</a>
+    <a href="#menu"         class="drawer-link" onclick="closeDrawer()">Full Menu</a>
+    <a href="#opening-hours" class="drawer-link" onclick="closeDrawer()">Opening Hours</a>
+    <a href="#contact"      class="drawer-link" onclick="closeDrawer()">Contact & Location</a>
   </nav>
   <div class="drawer-actions">
     <a href="tel:+919011138515" class="drawer-btn drawer-btn-call">
